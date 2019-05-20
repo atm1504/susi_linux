@@ -3,11 +3,14 @@ import sys
 import logging
 import argparse
 import subprocess
+import vlc
 
 import colorlog
 
 from . import SusiStateMachine
+from . import VlcPlayer
 
+player = VlcPlayer()
 
 parser = argparse.ArgumentParser(prog='python3 -m main',
                                  description='SUSI Linux main program')
@@ -29,7 +32,10 @@ def get_colorlog_handler(short=False):
 def startup_sound():
     curr_folder = os.path.dirname(os.path.abspath(__file__))
     audio_file = os.path.join(curr_folder, 'wav/ting-ting_susi_has_started.wav')
-    subprocess.Popen(['play', audio_file], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    player.play(audio_file)
+    print("DEBUG waiting for song to end!")
+    player.wait_till_end()
+    print("DEBUG song has ended!")
 
 
 if __name__ == '__main__':

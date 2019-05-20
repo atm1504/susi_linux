@@ -2,3 +2,4 @@
 """
 from .states import SusiStateMachine
 from .states import Components
+from .vlcplayer import VlcPlayer
